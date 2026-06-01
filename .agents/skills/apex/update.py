@@ -5,16 +5,17 @@
 
 import os
 import shutil
-
-from manifest import skills
+import json
 import requests
 
 TEMP_SKILLS_FOLDER = 'temp-skills'
-GITHUB_REPO_URL = "https://github.com/town-of-apex/ai-skills"
+GITHUB_REPO_URL = "https://github.com/Town-of-Apex/ai-skills"
+GITHUB_RAW_BASE = "https://raw.githubusercontent.com/Town-of-Apex/ai-skills/main"
 
 # Get the latest info from the manifest.json file
 def get_latest_skills_manifest():
-    response = requests.get(f'{GITHUB_REPO_URL}/.agents/skills/apex/manifest.json')
+    response = requests.get(f'{GITHUB_RAW_BASE}/.agents/skills/apex/manifest.json')
+    response.raise_for_status()
     return response.json()
 
 # Get the current info from the manifest.json file in the local skills folder
@@ -24,6 +25,7 @@ def get_current_skills_version():
 
 def update_skills():
 
+    print('Getting latest skills manifest...')
     latest_version = get_latest_skills_manifest()['metadata']['version']
     current_version = get_current_skills_version()
 

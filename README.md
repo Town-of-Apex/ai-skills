@@ -14,10 +14,12 @@ To install the latest Apex Town skills into your project, run the following comm
 ```bash
 git clone <skills-repo-url> temp-skills
 mkdir -p .agents/skills/apex
-cp temp-skills/skills/*.md .agents/skills/apex/
+cp -R temp-skills/.agents/skills/apex .agents/skills/
 rm -rf temp-skills
 ```
 This will copy the most recent skill files into your project's `.agents/skills/apex` folder.
+
+> NOTE: You may need to add the requests package to your project venv. Using uv is the fastest and simplest method, allowing `uv add requests` to handle venv and dependency management tasks near-instantly. 
 
 
 ### Update Your Copy of Town Skills
