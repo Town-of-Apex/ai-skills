@@ -1,0 +1,14 @@
+{
+    "metadata": {
+        "title": "Apex Skills",
+        "version": "1.0.0"
+    },
+    "latest_updated_skills": [
+        "apex-app-architecture",
+        "apex-dependency-advisor",
+        "apex-debug-and-fix",
+        "apex-code-review",
+        "apex-ui-design"
+        
+    ]
+}
