@@ -14,13 +14,13 @@ GITHUB_RAW_BASE = "https://raw.githubusercontent.com/Town-of-Apex/ai-skills/main
 
 # Get the latest info from the manifest.json file
 def get_latest_skills_manifest():
-    response = requests.get(f'{GITHUB_RAW_BASE}/.agents/skills/apex/manifest.json')
+    response = requests.get(f'{GITHUB_RAW_BASE}/manifest.json')
     response.raise_for_status()
     return response.json()
 
 # Get the current info from the manifest.json file in the local skills folder
 def get_current_skills_version():
-    with open('.agents/skills/apex/manifest.json', 'r') as f:
+    with open('manifest.json', 'r') as f:
         return json.load(f)['metadata']['version']
 
 def update_skills():

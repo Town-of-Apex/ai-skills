@@ -12,10 +12,14 @@ For each Town project, we recommend installing these skills to the project direc
 To install the latest Apex Town skills into your project, run the following commands from your project root:
 
 ```bash
-git clone <skills-repo-url> temp-skills
-mkdir -p .agents/skills/apex
-cp -R temp-skills/.agents/skills/apex .agents/skills/
+git clone https://github.com/Town-of-Apex/ai-skills temp-skills
+uv run temp_skills/install.py . --force
+# or if not using uv
+python temp_skills/install.py . --force
+# on Unix/MacOS systems
 rm -rf temp-skills
+# on Windows/Powershell systems
+rm -r -fo temp-skills
 ```
 This will copy the most recent skill files into your project's `.agents/skills/apex` folder.
 
