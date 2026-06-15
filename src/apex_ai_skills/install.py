@@ -22,8 +22,8 @@ def install_skills(project_path: Path, *, force: bool = False) -> None:
 
     print("Fetching latest Apex AI skills from GitHub...")
     try:
-        with fetch_skills_source() as source:
-            copy_skills_to_project(source, destination)
+        with fetch_skills_source() as (source, repo_root):
+            copy_skills_to_project(source, repo_root, destination)
     except SkillsFetchError as exc:
         print(f"ERROR: {exc}")
         sys.exit(1)

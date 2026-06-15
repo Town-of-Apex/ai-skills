@@ -10,8 +10,9 @@ from apex_ai_skills.fetch import (
     SkillsFetchError,
     copy_skills_to_project,
     fetch_remote_manifest,
+    fetch_remote_version,
     fetch_skills_source,
-    parse_version,
+    parse_installed_version,
     read_local_manifest,
 )
 
@@ -28,10 +29,10 @@ def update_skills(project_path: Path, *, force: bool = False) -> None:
 
     print("Checking for Apex AI skills updates...")
     try:
+        remote_version = fetch_remote_version()
         remote_manifest = fetch_remote_manifest()
-        remote_version = parse_version(remote_manifest)
     except (SkillsFetchError, OSError) as exc:
-        print(f"ERROR: Could not fetch remote manifest: {exc}")
+        print(f"ERROR: Could not fetch remote version: {exc}")
         sys.exit(1)
 
     local_manifest = read_local_manifest(destination)
@@ -41,7 +42,7 @@ def update_skills(project_path: Path, *, force: bool = False) -> None:
         _print_update_complete(destination, remote_version, remote_manifest)
         return
 
-    local_version = parse_version(local_manifest)
+    local_version = parse_installed_version(local_manifest)
 
     if not force and remote_version <= local_version:
         print(f"Skills are up to date at {local_version}.")
@@ -58,8 +59,8 @@ def update_skills(project_path: Path, *, force: bool = False) -> None:
 
 def _replace_skills(destination: Path) -> None:
     try:
-        with fetch_skills_source() as source:
-            copy_skills_to_project(source, destination)
+        with fetch_skills_source() as (source, repo_root):
+            copy_skills_to_project(source, repo_root, destination)
     except SkillsFetchError as exc:
         print(f"ERROR: {exc}")
         sys.exit(1)
